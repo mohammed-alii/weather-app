@@ -1,0 +1,111 @@
+<app-loading *ngIf="showLoading"></app-loading>
+
+<div class="landing">
+  <div class="container">
+    <div class="common-info row">
+      <div class="location">
+        <img src="../../assets/location.png" alt="" />
+        <h4>{{ current.name }}</h4>
+        <img src="../../assets/chevron-right.png" alt="" />
+      </div>
+      <h1 class="weather-desc">
+        {{ current.weather[0]?.main }}
+      </h1>
+      <div class="weather-state">
+        <div class="temp">
+          <div class="temperature">
+            {{ current.main.temp | number : "1.0-0" }}&deg; C
+          </div>
+          <div class="date">
+            {{ dateNow }}
+          </div>
+        </div>
+        <div class="icon">
+          <img
+            src="https://openweathermap.org/img/wn/{{
+              current.weather[0]?.icon
+            }}@2x.png"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+    <div class="content-grid">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-4 left-side">
+          <ul class="fs-lg-4">
+            <li><img src="../../assets/praying.png" alt="" /></li>
+            <li>Prayer Times:</li>
+            <li>Fajr: {{ prayerTimes.Fajr }}</li>
+            <li>Sunrise: {{ prayerTimes.Sunrise }}</li>
+            <li>Dhuhr: {{ prayerTimes.Dhuhr }}</li>
+            <li>Asr: {{ prayerTimes.Asr }}</li>
+            <li>Maghrib: {{ prayerTimes.Maghrib }}</li>
+            <li>Isha: {{ prayerTimes.Isha }}</li>
+          </ul>
+        </div>
+        <div class="col-lg-7 col-md-6 col-sm-6 col-8 center">
+          <div class="center-row">
+            <apx-chart
+              [series]="chartOptions.series!"
+              [chart]="chartOptions.chart!"
+              [xaxis]="chartOptions.xaxis!"
+              [yaxis]="chartOptions.yaxis!"
+              [dataLabels]="chartOptions.dataLabels!"
+              [grid]="chartOptions.grid!"
+              [stroke]="chartOptions.stroke!"
+              [title]="chartOptions.title!"
+              [theme]="chartOptions.theme!"
+            ></apx-chart>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4 col-12 right-side">
+          <div class="forecast">
+            <ul class="days">
+              <li *ngFor="let day of nextFiveDays">{{ day }}</li>
+            </ul>
+            <ul class="icons">
+              <li *ngFor="let day of fiveDaysData">
+                <img
+                  src="https://openweathermap.org/img/wn/{{
+                    day.weather[0]?.icon
+                  }}@2x.png"
+                  alt=""
+                />
+              </li>
+            </ul>
+            <div class="conditions">
+              <h2>Air Conditions</h2>
+              <div class="condition">
+                <img src="../../assets/thermometer.png" alt="" />
+                <div class="text">
+                  <h4>Real Feel</h4>
+                  <p>{{ current.main.feels_like | number : "1.0-0" }}&deg; C</p>
+                </div>
+              </div>
+              <div class="condition">
+                <img src="../../assets/wind.png" alt="" />
+                <div class="text">
+                  <h4>Wind</h4>
+                  <p>{{ current.wind.speed }} km/hr</p>
+                </div>
+              </div>
+              <div class="condition">
+                <img src="../../assets/humidity.png" alt="" />
+                <div class="text">
+                  <h4>Humidity</h4>
+                  <p>{{ current.main.humidity }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<img
+  src="../../assets/{{ current.weather[0]?.description }}.jpg"
+  alt=""
+  class="background-img"
+/>
